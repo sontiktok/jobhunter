@@ -2,6 +2,7 @@ package vn.theson.jobhunter.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import vn.theson.jobhunter.entity.User;
 import vn.theson.jobhunter.service.UserService;
@@ -12,13 +13,17 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
         User newUser = this.userService.handleCreateUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
