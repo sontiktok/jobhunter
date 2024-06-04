@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 
 @Component("userDetailsService")
-public class UserDetailCustom implements UserDetailsService {
+public class UserDetailsCustom implements UserDetailsService {
 
     private UserService userService;
 
-    public UserDetailCustom(UserService userService) {
+    public UserDetailsCustom(UserService userService) {
         this.userService = userService;
     }
 
@@ -23,6 +23,9 @@ public class UserDetailCustom implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         vn.theson.jobhunter.entity.User user = this.userService.handleGetUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Username/password invalid!");
+        }
         return new User(
                 user.getName(),
                 user.getPassword(),

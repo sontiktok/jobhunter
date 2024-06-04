@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import vn.theson.jobhunter.entity.User;
 import vn.theson.jobhunter.service.UserService;
-import vn.theson.jobhunter.service.error.IdInvalidException;
+import vn.theson.jobhunter.util.error.IdInvalidException;
 
 import java.util.List;
 
