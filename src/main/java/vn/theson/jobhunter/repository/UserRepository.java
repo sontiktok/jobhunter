@@ -6,4 +6,5 @@ import vn.theson.jobhunter.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String username);
 }
