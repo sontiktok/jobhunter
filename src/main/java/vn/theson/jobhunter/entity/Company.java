@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import vn.theson.jobhunter.util.SecurityUtil;
 
 import java.time.Instant;
 
@@ -40,7 +41,9 @@ public class Company {
 
     @PrePersist
     public void handleBeforeCreatedAt(){
-        this.createdBy = "The Son";
+        this.createdBy = SecurityUtil.getCurrentUserLogin().isPresent() == true ?
+        SecurityUtil.getCurrentUserLogin().get() : "";
+
         this.createdAt = Instant.now();
     }
 }
