@@ -1,5 +1,6 @@
 package vn.theson.jobhunter.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -27,11 +28,19 @@ public class Company {
 
     private String logo;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
     private Instant createdAt;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss a", timezone = "GMT+7")
     private Instant updatedAt;
 
     private String createdBy;
 
     private String updatedBy;
+
+    @PrePersist
+    public void handleBeforeCreatedAt(){
+        this.createdBy = "The Son";
+        this.createdAt = Instant.now();
+    }
 }
