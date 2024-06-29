@@ -14,8 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
-import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
-import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 import vn.theson.jobhunter.util.SecurityUtil;
 import javax.crypto.SecretKey;
@@ -34,22 +32,18 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http,CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         http
                 .csrf(c -> c.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         authz -> authz
-                                .requestMatchers("/","/login").permitAll()
+                                .requestMatchers("/","api/v1/login").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults())
                         .authenticationEntryPoint(customAuthenticationEntryPoint))
-//                .exceptionHandling(
-//                        exception -> exception
-//                                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint()) //401
-//                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler()) //403
-//
-//                )
                 .formLogin(f -> f.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();

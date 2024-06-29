@@ -1,6 +1,7 @@
 package vn.theson.jobhunter.entity.dto;
 
 public class ResLoginDTO {
+
     private String accessToken;
 
     public String getAccessToken() {
