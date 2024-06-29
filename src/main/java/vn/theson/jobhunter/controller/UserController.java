@@ -1,7 +1,9 @@
 package vn.theson.jobhunter.controller;
 
+import com.turkraft.springfilter.boot.Filter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.theson.jobhunter.entity.User;
 import vn.theson.jobhunter.entity.dto.ResultPaginationDTO;
 import vn.theson.jobhunter.service.UserService;
+import vn.theson.jobhunter.util.annotation.ApiMessage;
 import vn.theson.jobhunter.util.error.IdInvalidException;
 
 import java.util.List;
@@ -47,16 +50,17 @@ public class UserController {
     }
 
     @GetMapping("/users")
+    @ApiMessage("Fetch all users")
     public ResponseEntity<ResultPaginationDTO> getAllUser(
-            @RequestParam("current") Optional<String> currentOptional,
-            @RequestParam("pageSize") Optional<String> pageSizeOptional
+            @Filter Specification<User> spec,
+            Pageable pageable
         ) {
-        String sCurrent = currentOptional.isPresent() ? currentOptional.get() : "";
-        String sPageSize = pageSizeOptional.isPresent() ? pageSizeOptional.get() : "";
-        int current = Integer.parseInt(sCurrent);
-        int pageSize = Integer.parseInt(sPageSize);
-        Pageable pageable = PageRequest.of(current-1, pageSize);
-        return ResponseEntity.status(HttpStatus.OK).body(this.userService.fetchAllUser(pageable));
+//        String sCurrent = currentOptional.isPresent() ? currentOptional.get() : "";
+//        String sPageSize = pageSizeOptional.isPresent() ? pageSizeOptional.get() : "";
+//        int current = Integer.parseInt(sCurrent);
+//        int pageSize = Integer.parseInt(sPageSize);
+//        Pageable pageable = PageRequest.of(current-1, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.fetchAllUser(spec,pageable));
     }
 
     @GetMapping("/users/{id}")
