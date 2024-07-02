@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.theson.jobhunter.entity.Company;
 import vn.theson.jobhunter.entity.response.ResultPaginationDTO;
 import vn.theson.jobhunter.service.CompanyService;
+import vn.theson.jobhunter.util.annotation.ApiMessage;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,12 +22,13 @@ public class CompanyController {
     }
     // Create
     @PostMapping("/companies")
-    public ResponseEntity<Company> createCompany(@Valid @RequestBody Company company) {
+    public ResponseEntity<?> createCompany(@Valid @RequestBody Company company) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.companyService.hanldeCreateCompany(company));
     }
 
     // Get
     @GetMapping("/companies")
+    @ApiMessage("Fetch companies")
     public ResponseEntity<ResultPaginationDTO> getCompany(
             @Filter Specification<Company> spec, Pageable pageable) {
 
