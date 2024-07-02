@@ -1,4 +1,5 @@
-package vn.theson.jobhunter.entity.dto;
+package vn.theson.jobhunter.entity.response;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +9,14 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class ResUpdateUserDTO {
+
+public class ResCreateUserDTO {
     private long id;
     private String name;
+    private String email;
     private GenderEnum gender;
     private String address;
     private int age;
-    private Instant updatedAt;
+    private Instant createdAt;
 }
+

@@ -6,7 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.theson.jobhunter.entity.User;
-import vn.theson.jobhunter.entity.dto.*;
+import vn.theson.jobhunter.entity.response.ResCreateUserDTO;
+import vn.theson.jobhunter.entity.response.ResUpdateUserDTO;
+import vn.theson.jobhunter.entity.response.ResUserDTO;
+import vn.theson.jobhunter.entity.response.ResultPaginationDTO;
 import vn.theson.jobhunter.repository.UserRepository;
 
 import java.util.List;
@@ -40,7 +43,7 @@ public class UserService {
     public ResultPaginationDTO fetchAllUser(Specification<User> spec, Pageable pageable) {
         Page<User> pageUser = this.userRepository.findAll(spec, pageable);
         ResultPaginationDTO rs = new ResultPaginationDTO();
-        Meta mt = new Meta();
+        ResultPaginationDTO.Meta mt = new ResultPaginationDTO.Meta();
 
         mt.setPage(pageable.getPageNumber() + 1);
         mt.setPageSize(pageable.getPageSize());

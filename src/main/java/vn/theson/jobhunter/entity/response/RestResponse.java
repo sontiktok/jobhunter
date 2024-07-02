@@ -1,4 +1,4 @@
-package vn.theson.jobhunter.entity;
+package vn.theson.jobhunter.entity.response;
 
 public class RestResponse <T> {
     private int statusCode;

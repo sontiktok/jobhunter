@@ -1,8 +1,8 @@
-package vn.theson.jobhunter.entity.dto;
+package vn.theson.jobhunter.entity.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class LoginDTO {
+public class ReqLoginDTO {
     @NotBlank(message = "Username is required!")
     private String username;
 

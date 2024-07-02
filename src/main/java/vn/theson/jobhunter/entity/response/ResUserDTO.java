@@ -1,4 +1,4 @@
-package vn.theson.jobhunter.entity.dto;
+package vn.theson.jobhunter.entity.response;
 
 
 import lombok.AllArgsConstructor;
