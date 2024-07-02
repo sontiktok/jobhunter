@@ -1,5 +1,6 @@
 package vn.theson.jobhunter.util;
 
+import com.nimbusds.jose.util.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -12,22 +13,31 @@ import vn.theson.jobhunter.entity.response.RestResponse;
 import vn.theson.jobhunter.util.annotation.ApiMessage;
 
 @ControllerAdvice
-public class FormatRestResponse implements ResponseBodyAdvice <Object>{
+public class FormatRestResponse implements ResponseBodyAdvice<Object> {
+
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
         return true;
     }
 
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(
+            Object body,
+            MethodParameter returnType,
+            MediaType selectedContentType,
+            Class selectedConverterType,
+            ServerHttpRequest request,
+            ServerHttpResponse response) {
         HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
         int status = servletResponse.getStatus();
 
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(status);
-        if(body instanceof String){
+
+        if (body instanceof String || body instanceof Resource) {
             return body;
         }
+
         if (status >= 400) {
             return body;
         } else {
@@ -35,6 +45,8 @@ public class FormatRestResponse implements ResponseBodyAdvice <Object>{
             ApiMessage message = returnType.getMethodAnnotation(ApiMessage.class);
             res.setMessage(message != null ? message.value() : "CALL API SUCCESS");
         }
+
         return res;
     }
+
 }
