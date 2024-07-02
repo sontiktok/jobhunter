@@ -1,4 +1,4 @@
-package vn.theson.jobhunter.entity.response;
+package vn.theson.jobhunter.entity.response.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

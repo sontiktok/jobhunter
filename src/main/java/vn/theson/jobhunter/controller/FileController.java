@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import vn.theson.jobhunter.entity.response.ResUploadFileDTO;
+import vn.theson.jobhunter.entity.response.file.ResUploadFileDTO;
 import vn.theson.jobhunter.service.FileService;
 import vn.theson.jobhunter.util.annotation.ApiMessage;
 import vn.theson.jobhunter.util.error.StorageException;

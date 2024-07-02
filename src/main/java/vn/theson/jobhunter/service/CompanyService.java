@@ -19,13 +19,15 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final UserRepository userRepository;
 
-    public CompanyService(CompanyRepository companyRepository, UserRepository userRepository) {
+    public CompanyService(
+            CompanyRepository companyRepository,
+            UserRepository userRepository) {
         this.companyRepository = companyRepository;
         this.userRepository = userRepository;
     }
 
-    public Company hanldeCreateCompany(Company company) {
-        return this.companyRepository.save(company);
+    public Company handleCreateCompany(Company c) {
+        return this.companyRepository.save(c);
     }
 
     public ResultPaginationDTO handleGetCompany(Specification<Company> spec, Pageable pageable) {

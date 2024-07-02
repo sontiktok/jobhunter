@@ -12,6 +12,8 @@ import vn.theson.jobhunter.entity.response.ResultPaginationDTO;
 import vn.theson.jobhunter.service.CompanyService;
 import vn.theson.jobhunter.util.annotation.ApiMessage;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1")
 public class CompanyController {
@@ -20,13 +22,13 @@ public class CompanyController {
     public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
-    // Create
+
     @PostMapping("/companies")
-    public ResponseEntity<?> createCompany(@Valid @RequestBody Company company) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.companyService.hanldeCreateCompany(company));
+    public ResponseEntity<?> createCompany(@Valid @RequestBody Company reqCompany) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.companyService.handleCreateCompany(reqCompany));
     }
 
-    // Get
     @GetMapping("/companies")
     @ApiMessage("Fetch companies")
     public ResponseEntity<ResultPaginationDTO> getCompany(
@@ -35,19 +37,22 @@ public class CompanyController {
         return ResponseEntity.ok(this.companyService.handleGetCompany(spec, pageable));
     }
 
-    // Update
     @PutMapping("/companies")
     public ResponseEntity<Company> updateCompany(@Valid @RequestBody Company reqCompany) {
         Company updatedCompany = this.companyService.handleUpdateCompany(reqCompany);
         return ResponseEntity.ok(updatedCompany);
     }
 
-    // Delete
     @DeleteMapping("/companies/{id}")
     public ResponseEntity<Void> deleteCompany(@PathVariable("id") long id) {
         this.companyService.handleDeleteCompany(id);
         return ResponseEntity.ok(null);
     }
 
-
+    @GetMapping("/companies/{id}")
+    @ApiMessage("fetch company by id")
+    public ResponseEntity<Company> fetchCompanyById(@PathVariable("id") long id) {
+        Optional<Company> cOptional = this.companyService.findById(id);
+        return ResponseEntity.ok().body(cOptional.get());
+    }
 }
