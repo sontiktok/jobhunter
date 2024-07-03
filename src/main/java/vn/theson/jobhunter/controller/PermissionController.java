@@ -13,6 +13,7 @@ import vn.theson.jobhunter.service.PermissionService;
 import vn.theson.jobhunter.util.annotation.ApiMessage;
 import vn.theson.jobhunter.util.error.IdInvalidException;
 
+
 @RestController
 @RequestMapping("/api/v1")
 public class PermissionController {
@@ -45,7 +46,10 @@ public class PermissionController {
 
         // check exist by module, apiPath and method
         if (this.permissionService.isPermissionExist(p)) {
-            throw new IdInvalidException("Permission đã tồn tại.");
+            // check name
+            if (this.permissionService.isSameName(p)) {
+                throw new IdInvalidException("Permission đã tồn tại.");
+            }
         }
 
         // update permission
@@ -71,3 +75,4 @@ public class PermissionController {
         return ResponseEntity.ok(this.permissionService.getPermissions(spec, pageable));
     }
 }
+

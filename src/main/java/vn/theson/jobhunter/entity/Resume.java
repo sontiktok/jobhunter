@@ -2,6 +2,7 @@ package vn.theson.jobhunter.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import vn.theson.jobhunter.util.SecurityUtil;
@@ -18,8 +19,10 @@ public class Resume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "email không được để trống")
     private String email;
 
+    @NotBlank(message = "url không được để trống (upload cv chưa thành công)")
     private String url;
 
     @Enumerated(EnumType.STRING)

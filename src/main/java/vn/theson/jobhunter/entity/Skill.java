@@ -2,6 +2,7 @@ package vn.theson.jobhunter.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import vn.theson.jobhunter.util.SecurityUtil;
@@ -18,6 +19,7 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "name không được để trống")
     private String name;
 
     private Instant createdAt;
@@ -47,3 +49,4 @@ public class Skill {
         this.updatedAt = Instant.now();
     }
 }
+

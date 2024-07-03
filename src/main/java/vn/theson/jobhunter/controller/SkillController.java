@@ -73,3 +73,4 @@ public class SkillController {
                 this.skillService.fetchAllSkills(spec, pageable));
     }
 }
+

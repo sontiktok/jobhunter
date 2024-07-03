@@ -10,7 +10,6 @@ import vn.theson.jobhunter.util.SecurityUtil;
 import java.time.Instant;
 import java.util.List;
 
-
 @Table(name = "companies")
 @Entity
 @Getter

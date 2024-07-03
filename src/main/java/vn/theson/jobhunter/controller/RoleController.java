@@ -13,6 +13,7 @@ import vn.theson.jobhunter.service.RoleService;
 import vn.theson.jobhunter.util.annotation.ApiMessage;
 import vn.theson.jobhunter.util.error.IdInvalidException;
 
+
 @RestController
 @RequestMapping("/api/v1")
 public class RoleController {
@@ -47,7 +48,7 @@ public class RoleController {
         // tại");
         // }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.roleService.update(r));
+        return ResponseEntity.ok().body(this.roleService.update(r));
     }
 
     @DeleteMapping("/roles/{id}")
@@ -69,5 +70,18 @@ public class RoleController {
         return ResponseEntity.ok(this.roleService.getRoles(spec, pageable));
     }
 
+    @GetMapping("/roles/{id}")
+    @ApiMessage("Fetch role by id")
+    public ResponseEntity<Role> getById(@PathVariable("id") long id) throws IdInvalidException {
+
+        Role role = this.roleService.fetchById(id);
+        if (role == null) {
+            throw new IdInvalidException("Resume với id = " + id + " không tồn tại");
+        }
+
+        return ResponseEntity.ok().body(role);
+    }
+
 }
+
 

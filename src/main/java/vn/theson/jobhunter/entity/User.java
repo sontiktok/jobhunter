@@ -11,6 +11,7 @@ import vn.theson.jobhunter.util.constant.GenderEnum;
 import java.time.Instant;
 import java.util.List;
 
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -69,8 +70,6 @@ public class User {
         this.updatedBy = SecurityUtil.getCurrentUserLogin().isPresent() == true
                 ? SecurityUtil.getCurrentUserLogin().get()
                 : "";
-
         this.updatedAt = Instant.now();
     }
 }
-
