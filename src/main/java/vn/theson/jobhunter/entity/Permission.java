@@ -6,54 +6,39 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import vn.theson.jobhunter.util.SecurityUtil;
-import vn.theson.jobhunter.util.constant.GenderEnum;
 
 import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "permissions")
 @Getter
 @Setter
-public class User {
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "name không được để trống")
     private String name;
 
-    @NotBlank(message = "email không được để trống")
-    private String email;
+    @NotBlank(message = "apiPath không được để trống")
+    private String apiPath;
 
-    @NotBlank(message = "password không được để trống")
-    private String password;
+    @NotBlank(message = "method không được để trống")
+    private String method;
 
-    private int age;
-
-    @Enumerated(EnumType.STRING)
-    private GenderEnum gender;
-
-    private String address;
-
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String refreshToken;
+    @NotBlank(message = "module không được để trống")
+    private String module;
 
     private Instant createdAt;
     private Instant updatedAt;
     private String createdBy;
     private String updatedBy;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
-    private Company company;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "permissions")
     @JsonIgnore
-    List<Resume> resumes;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private List<Role> roles;
 
     @PrePersist
     public void handleBeforeCreate() {
@@ -73,4 +58,3 @@ public class User {
         this.updatedAt = Instant.now();
     }
 }
-
